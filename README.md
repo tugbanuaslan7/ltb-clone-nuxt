@@ -1,1 +1,0 @@
-# ltb-clone-nuxt
