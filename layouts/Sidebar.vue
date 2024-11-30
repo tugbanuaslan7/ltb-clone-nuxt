@@ -4,6 +4,7 @@
         <li><button @click="navigateTo('Navbar')">Navbar</button></li>
         <li><button @click="navigateTo('Jean')">Jean</button></li>
         <li><button @click="navigateTo('Kadin')">Kadın</button></li>
+        <li><button @click="navigateTo('Giris')">Giriş</button></li>
       </ul>
     </div>
   </template>

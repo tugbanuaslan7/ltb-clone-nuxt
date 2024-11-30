@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Navbar from '../pages/Navbar.vue'; // Navbar sayfası
 import Jean from '../pages/Jean.vue'; // Jean sayfası
 import Kadin from '../pages/Kadin.vue';
+import Giris from '../pages/Giris.vue';
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: '/kadin',
     name: 'Kadin',
     component: Kadin,
+  },
+  {
+    path: '/giris',
+    name: 'Giris',
+    component: Giris,
   },
 ];
 
