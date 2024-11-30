@@ -15,6 +15,7 @@ import Navbar from '~/pages/Navbar.vue';
 import Jean from '~/pages/Jean.vue';
 import Kadin from '~/pages/Kadin.vue';
 import Giris from '~/pages/Giris.vue';
+import Giris from '~/pages/Sepet.vue';
 import Sidebar from '~/layouts/Sidebar.vue';
 </script>
 

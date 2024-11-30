@@ -3,6 +3,7 @@ import Navbar from '../pages/Navbar.vue'; // Navbar sayfası
 import Jean from '../pages/Jean.vue'; // Jean sayfası
 import Kadin from '../pages/Kadin.vue';
 import Giris from '../pages/Giris.vue';
+import Sepet from '../pages/Sepet.vue';
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/giris',
     name: 'Giris',
     component: Giris,
+  },
+  {
+    path: '/sepet',
+    name: 'Sepet',
+    component: Sepet,
   },
 ];
 
