@@ -3,6 +3,7 @@
       <ul>
         <li><button @click="navigateTo('Navbar')">Navbar</button></li>
         <li><button @click="navigateTo('Jean')">Jean</button></li>
+        <li><button @click="navigateTo('Kadin')">Kadın</button></li>
       </ul>
     </div>
   </template>

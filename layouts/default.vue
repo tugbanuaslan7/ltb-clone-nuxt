@@ -11,7 +11,9 @@
 </template>
 
 <script setup>
-import Navbar from '~/pages/Navbar.vue'; // Navbar doğru bir dizinde
+import Navbar from '~/pages/Navbar.vue';
+import Jean from '~/pages/Jean.vue';
+import Kadin from '~/pages/Kadin.vue';
 import Sidebar from '~/layouts/Sidebar.vue';
 </script>
 
