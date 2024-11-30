@@ -2,6 +2,7 @@
     <div class="sidebar">
       <ul>
         <li><button @click="navigateTo('Navbar')">Navbar</button></li>
+        <li><button @click="navigateTo('Jean')">Jean</button></li>
       </ul>
     </div>
   </template>
@@ -18,8 +19,8 @@
   
   <style scoped>
   .sidebar {
-    width: 200px;
-    height: 100%;
+    width: 110px;
+    height: 100vh;
     background-color: #f4f4f4;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0,0,0,0.1);

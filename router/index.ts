@@ -1,16 +1,22 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import type { RouteRecordRaw } from 'vue-router';
-import Navbar from '../pages/Navbar.vue';
-import Home from '../pages/index.vue';
+import Navbar from '../pages/Navbar.vue'; // Navbar sayfası
+import Jean from '../pages/Jean.vue'; // Jean sayfası
 
-const routes: Array<RouteRecordRaw> = [
-  { path: '/', name: 'Home', component: Home }, // Ana sayfa route'u
-  { path: '/navbar', name: 'Navbar', component: Navbar },
-  // Diğer componentler
+const routes = [
+  {
+    path: '/navbar',
+    name: 'Navbar',
+    component: Navbar,
+  },
+  {
+    path: '/jean',
+    name: 'Jean',
+    component: Jean,
+  },
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(process.env.BASE_URL),
   routes,
 });
 
