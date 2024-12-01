@@ -16,7 +16,8 @@ import Jean from '~/pages/Jean.vue';
 import Kadin from '~/pages/Kadin.vue';
 import Giris from '~/pages/Giris.vue';
 import Sepet from '~/pages/Sepet.vue';
-import Cart1 from '~/pages/Cart11.vue';
+import Cart1 from '~/pages/Cart1.vue';
+import Cart2 from '~/pages/Cart2.vue';
 import Sidebar from '~/layouts/Sidebar.vue';
 </script>
 
