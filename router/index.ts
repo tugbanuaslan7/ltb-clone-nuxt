@@ -4,6 +4,7 @@ import Jean from '../pages/Jean.vue'; // Jean sayfası
 import Kadin from '../pages/Kadin.vue';
 import Giris from '../pages/Giris.vue';
 import Sepet from '../pages/Sepet.vue';
+import Cart1 from '~/pages/Cart1.vue';
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/sepet',
     name: 'Sepet',
     component: Sepet,
+  },
+  {
+    path: '/cart1',
+    name: 'Cart1',
+    component: Cart1,
   },
 ];
 
