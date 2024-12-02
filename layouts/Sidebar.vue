@@ -8,6 +8,7 @@
         <li><button @click="navigateTo('Sepet')">Sepet</button></li>
         <li><button @click="navigateTo('Cart1')">Cart1</button></li>
         <li><button @click="navigateTo('Cart2')">Cart2</button></li>
+        <li><button @click="navigateTo('Kategori')">Kategori</button></li>
       </ul>
     </div>
   </template>
@@ -24,7 +25,7 @@
   
   <style scoped>
   .sidebar {
-    width: 110px;
+    width: 120px;
     height: 100vh;
     background-color: #f4f4f4;
     padding: 20px;

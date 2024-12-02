@@ -6,6 +6,7 @@ import Giris from '../pages/Giris.vue';
 import Sepet from '../pages/Sepet.vue';
 import Cart1 from '~/pages/Cart1.vue';
 import Cart2 from '~/pages/Cart2.vue';
+import Kategori from '~/pages/Kategori.vue';
 
 const routes = [
   {
@@ -42,6 +43,11 @@ const routes = [
     path: '/cart2',
     name: 'Cart2',
     component: Cart2,
+  },
+  {
+    path: '/kategori',
+    name: 'Kategori',
+    component: Kategori,
   },
 ];
 
