@@ -7,6 +7,7 @@ import Sepet from '../pages/Sepet.vue';
 import Cart1 from '~/pages/Cart1.vue';
 import Cart2 from '~/pages/Cart2.vue';
 import Kategori from '~/pages/Kategori.vue';
+import Footer from '~/pages/Footer.vue';
 
 const routes = [
   {
@@ -48,6 +49,11 @@ const routes = [
     path: '/kategori',
     name: 'Kategori',
     component: Kategori,
+  },
+  {
+    path: '/footer',
+    name: 'Footer',
+    component: Footer,
   },
 ];
 
