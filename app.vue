@@ -7,6 +7,7 @@
   </div>
 </template>
 
+
 <script lang="ts" setup>
 import Sidebar from './layouts/Sidebar.vue';
 </script>

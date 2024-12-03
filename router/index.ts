@@ -8,6 +8,7 @@ import Cart1 from '~/pages/Cart1.vue';
 import Cart2 from '~/pages/Cart2.vue';
 import Kategori from '~/pages/Kategori.vue';
 import Footer from '~/pages/Footer.vue';
+import Banner from '~/pages/Banner.vue';
 
 const routes = [
   {
@@ -54,6 +55,11 @@ const routes = [
     path: '/footer',
     name: 'Footer',
     component: Footer,
+  },
+  {
+    path: '/banner',
+    name: 'Banner',
+    component: Banner,
   },
 ];
 

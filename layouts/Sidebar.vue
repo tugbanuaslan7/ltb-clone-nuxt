@@ -10,6 +10,7 @@
         <li><button @click="navigateTo('Cart2')">Cart2</button></li>
         <li><button @click="navigateTo('Kategori')">Kategori</button></li>
         <li><button @click="navigateTo('Footer')">Footer</button></li>
+        <li><button @click="navigateTo('Banner')">Banner</button></li>
       </ul>
     </div>
   </template>
