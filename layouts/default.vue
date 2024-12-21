@@ -1,28 +1,25 @@
 <template>
   <div>
     <Navbar />
-    <div class="layout">
-      <Sidebar />
-      <main>
-        <NuxtPage />
-      </main>
-    </div>
+    <main>
+      <NuxtPage />
+    </main>
   </div>
 </template>
 
 <script setup>
-import Sidebar from '~/layouts/Sidebar.vue';
+import Navbar from '~/components/Navbar.vue';
 </script>
 
 <style scoped>
 .layout {
   display: flex;
-  height: 100vh; /* Tam ekran yüksekliği */
+  height: 100vh;
 }
 
 main {
   flex: 1;
   padding: 20px;
-  overflow-y: auto; /* İçerik uzun olursa kaydırma yapılabilir */
+  overflow-y: auto;
 }
 </style>

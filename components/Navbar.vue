@@ -7,13 +7,25 @@
 
     <!-- Menü -->
     <ul class="menu">
-      <li><a href="#">Jean</a></li>
+      <li @mouseenter="showJean" @mouseleave="hideJean">
+        <a href="#">Jean</a>
+        
+      </li>
       <li><a href="#">Kadın</a></li>
       <li><a href="#">Erkek</a></li>
       <li><a href="#">Çocuk</a></li>
       <li><a href="#">Outlet</a></li>
       <li><a href="#">Kampanyalar</a></li>
     </ul>
+
+    <!-- Jean içeriği -->
+    <div
+      :class="{ 'jean-container': true, active: isJeanVisible }"
+      @mouseenter="enterJean"
+      @mouseleave="leaveJean"
+    >
+      <Jean />
+    </div>
 
 
     <!-- Arama Çubuğu -->
@@ -29,7 +41,7 @@
 
 
     <!-- Sağdaki Eylemler -->
-     <div class="actions">
+    <div class="actions">
       <button class="login-btn">
         <i class="bi bi-person"></i> <!-- Bootstrap User İkonu -->
         <span>Hesabım</span>
@@ -45,6 +57,12 @@
     </div>
   </nav>
 
+  <!-- Jean Bileşenini Navbar'ın Altında Göster -->
+  <div v-if="isJeanVisible" class="jean-container">
+    <Jean />
+  </div>
+
+
   <!-- İkinci Bar (alt bar) -->
   <div class="secondary-navbar">
     <ul class="secondary-menu">
@@ -57,6 +75,26 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import Jean from '~/components/Jean.vue';
+
+
+// Durum değişkenleri
+const isJeanVisible = ref(false); // Jean bileşeni görünür mü?
+const isMouseInsideJean = ref(false); // Fare Jean menüsü veya içeriği üzerinde mi?
+
+// Olaylar
+const showJean = () => (isJeanVisible.value = true);
+const hideJean = () => {
+  if (!isMouseInsideJean.value) {
+    isJeanVisible.value = false;
+  }
+};
+const enterJean = () => (isMouseInsideJean.value = true); // Fare içeride
+const leaveJean = () => {
+  isMouseInsideJean.value = false; // Fare çıktı
+  hideJean();
+};
+
 
 // Mesajlar listesi
 const messages = [
@@ -81,6 +119,18 @@ onMounted(() => {
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;700&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 
+.navbar {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 110px;
+  background-color: white;
+  z-index: 10;
+}
+
+
 
 /* Tarayıcı varsayılan margin ve padding değerlerini sıfırla */
 * {
@@ -88,22 +138,12 @@ onMounted(() => {
   /* Tüm elemanlar için border-box kullanımı */
   font-family: 'Mulish', sans-serif;
   font-weight: 510;
-
+  margin: 0;
+  padding: 0;
 }
 
 
-/* Navbar (Ana Bar) */
-.navbar {
-  width: 100vw;
-  /* Ekran genişliğini tam kapla */
-  height: 110px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: white;
-  position: flex;
-  z-index: 10;
-}
+
 
 .logo img {
   height: 62px;
@@ -206,43 +246,74 @@ onMounted(() => {
 }
 
 .actions button {
-  display: flex; /* İkon ve yazıyı hizalamak için flexbox */
-  flex-direction: column; /* İkonu yazının üstüne yerleştirir */
-  align-items: center; /* İkon ve yazıyı ortalar */
-  justify-content: center; /* Dikey ortalama */
-  gap: 5px; /* İkon ve yazı arasındaki boşluk */
-  background-color: white; /* Arka plan rengi */
-  color: black; /* Varsayılan yazı ve ikon rengi */
-  padding: 10px 15px; /* İç boşluklar */
-  cursor: pointer; /* Tıklanabilir olduğunu gösterir */
-  transition: all 0.3s ease; /* Hover geçişi için animasyon */
+  display: flex;
+  /* İkon ve yazıyı hizalamak için flexbox */
+  flex-direction: column;
+  /* İkonu yazının üstüne yerleştirir */
+  align-items: center;
+  /* İkon ve yazıyı ortalar */
+  justify-content: center;
+  /* Dikey ortalama */
+  gap: 5px;
+  /* İkon ve yazı arasındaki boşluk */
+  background-color: white;
+  /* Arka plan rengi */
+  color: black;
+  /* Varsayılan yazı ve ikon rengi */
+  padding: 10px 15px;
+  /* İç boşluklar */
+  cursor: pointer;
+  /* Tıklanabilir olduğunu gösterir */
+  transition: all 0.3s ease;
+  /* Hover geçişi için animasyon */
   border: none;
   width: 70px;
   height: 70px;
 }
 
 .actions button i {
-  font-size: 19px; /* İkon boyutu */
+  font-size: 19px;
+  /* İkon boyutu */
 }
 
 .actions button span {
-  font-size: 12px; /* Yazı boyutu */
+  font-size: 12px;
+  /* Yazı boyutu */
 }
 
 .actions button:hover {
-  background-color: white; /* Arka plan rengi değişmez */
-  color: red; /* Yazı ve ikon rengi kırmızı olur */
+  background-color: white;
+  /* Arka plan rengi değişmez */
+  color: red;
+  /* Yazı ve ikon rengi kırmızı olur */
 }
 
 .actions button:hover i {
-  color: red; /* İkon rengini kırmızı yap */
+  color: red;
+  /* İkon rengini kırmızı yap */
 }
 
 .actions button:hover span {
-  color: red; /* Yazı rengini kırmızı yap */
+  color: red;
+  /* Yazı rengini kırmızı yap */
 }
 
+.jean-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: none;
+  transition: opacity 0.3s ease;
+}
 
+.jean-container.active {
+  display: block;
+}
 
 /* İkinci Bar (Alt Bar) */
 .secondary-navbar {

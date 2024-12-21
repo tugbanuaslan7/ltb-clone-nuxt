@@ -1,15 +1,10 @@
 <template>
-  <div id="app">
-    <Sidebar />
-    <div class="main-content">
-      <router-view />
-    </div>
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
 
-
 <script lang="ts" setup>
-import Sidebar from './layouts/Sidebar.vue';
 </script>
 
 <style scoped>

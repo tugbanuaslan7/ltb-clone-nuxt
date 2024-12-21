@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Navbar from '../pages/Navbar.vue'; // Navbar sayfası
-import Jean from '../pages/Jean.vue'; // Jean sayfası
-import Kadin from '../pages/Kadin.vue';
-import Giris from '../pages/Giris.vue';
-import Sepet from '../pages/Sepet.vue';
-import Cart1 from '~/pages/Cart1.vue';
-import Cart2 from '~/pages/Cart2.vue';
-import Kategori from '~/pages/Kategori.vue';
-import Footer from '~/pages/Footer.vue';
-import Banner from '~/pages/Banner.vue';
+import Navbar from '../components/Navbar.vue'; // Navbar sayfası
+import Jean from '../components/Jean.vue'; // Jean sayfası
+import Kadin from '../components/Kadin.vue';
+import Giris from '../components/Giris.vue';
+import Sepet from '../components/Sepet.vue';
+import Cart1 from '~/components/Cart1.vue';
+import Cart2 from '~/components/Cart2.vue';
+import Kategori from '~/components/Kategori.vue';
+import Footer from '~/components/Footer.vue';
+import Banner from '~/components/Banner.vue';
 
 const routes = [
   {

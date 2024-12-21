@@ -1,20 +1,27 @@
 <template>
-  <div class="jeans-page">
+  <div class="jeans-page" @mouseenter="showJean" @mouseleave="checkToHideJean">
     <div class="categories">
       <!-- Sol Sütun -->
       <div class="left-column">
         <section class="category">
           <h2><a href="/kadin-jean">Kadın Jean</a></h2>
-          <ul>
-            <li><a href="/super-skinny">Super Skinny</a></li>
-            <li><a href="/skinny">Skinny</a></li>
-            <li><a href="/slim">Slim</a></li>
-            <li><a href="/mom-jeans">Mom Jeans</a></li>
-            <li><a href="/staright">Straight</a></li>
-            <li><a href="/baloon-fit">Baloon Fit</a></li>
-            <li><a href="/flare">Flare</a></li>
-            <li><a href="/wide-leg">Wide Leg</a></li>
-            <li><a href="/relaxed-leg">Relaxed Leg</a></li>
+          <ul class="menu">
+            <li @mouseenter="showJean" @mouseleave="checkToHideJean">
+              <!-- Jean Popup -->
+        <div
+          v-if="showJeanPopup"
+          class="popup"
+          @mouseenter="popupHovered = true"
+          @mouseleave="popupHovered = false"
+        >
+          <Jean />
+              </div>
+            </li>
+            <li><a href="#">Kadın</a></li>
+            <li><a href="#">Erkek</a></li>
+            <li><a href="#">Çocuk</a></li>
+            <li><a href="#">Outlet</a></li>
+            <li><a href="#">Kampanyalar</a></li>
           </ul>
         </section>
 
@@ -59,7 +66,7 @@
 
         <div class="image-container">
           <a href="/jean-products">
-            <img src="/assets/images/jean.jpg" alt="Jean Fotoğrafı" />
+            <img src="../public/assets/images/jean.jpg" alt="Jean Fotoğrafı" />
           </a>
         </div>
       </div>
@@ -67,17 +74,48 @@
   </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      showPopup: false, // Jean popup'ının görünürlüğü
+      popupHovered: false, // Popup içine fare girip girmediği
+    };
+  },
+  methods: {
+    // Jean menüsüne fare gelince popup'ı göster
+    showJean() {
+      this.showPopup = true;
+    },
+    // Jean menüsünden fare çıkınca popup'ı gizle
+    checkToHideJean() {
+      if (!this.popupHovered) {
+        this.showPopup = false;
+      }
+    }
+  },
+};
+</script>
+
+
 <style scoped>
 .jeans-page {
   padding: 20px;
   font-family: 'Mulish', sans-serif;
   color: #333;
+  background-color: white;
 }
 
 .categories {
   display: flex;
   justify-content: space-between;
   gap: 10px;
+  flex-wrap: wrap;
+}
+
+.categories:hover .category a {
+  color: red;
+  /* Jean hover efekti için renk değişikliği */
 }
 
 .category h2 {
@@ -88,6 +126,8 @@
 
 .category h2 a {
   font-size: 20px;
+  color: inherit;
+  text-decoration: none;
 }
 
 .category h2 a:hover {
@@ -123,7 +163,21 @@
   /* Hover rengini belirler */
 }
 
+.popup {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  z-index: 1000;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
+
+.popup p {
+  margin: 0;
+}
 
 .other-column {
   margin-left: 10px;
