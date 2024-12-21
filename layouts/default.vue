@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar />
+    <Navbar v-if="$route.name !== 'Sepet'" />
     <main>
       <NuxtPage />
     </main>
@@ -9,6 +9,7 @@
 
 <script setup>
 import Navbar from '~/components/Navbar.vue';
+
 </script>
 
 <style scoped>

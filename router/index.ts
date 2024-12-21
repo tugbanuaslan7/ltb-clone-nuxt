@@ -2,8 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Navbar from '../components/Navbar.vue'; // Navbar sayfası
 import Jean from '../components/Jean.vue'; // Jean sayfası
 import Kadin from '../components/Kadin.vue';
-import Giris from '../components/Giris.vue';
-import Sepet from '../components/Sepet.vue';
+import Giris from '../pages/Giris.vue';
+import Sepet from '../pages/Sepet.vue';
 import Cart1 from '~/components/Cart1.vue';
 import Cart2 from '~/components/Cart2.vue';
 import Kategori from '~/components/Kategori.vue';
@@ -27,7 +27,7 @@ const routes = [
     component: Kadin,
   },
   {
-    path: '/giris',
+    path: '/Giris',
     name: 'Giris',
     component: Giris,
   },

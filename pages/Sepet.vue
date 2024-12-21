@@ -1,4 +1,5 @@
 <template>
+  <SepetNavbar />
     <div class="container">
       <!-- Sepet İkonu ve Sayaç -->
       <div class="buton">
@@ -10,13 +11,18 @@
       <h3 v-else>Sepetinizde {{ cartCount }} ürün bulunmaktadır.</h3> <!-- Sepette ürün var ise miktarı gösterir -->
   
       <div class="buton">
-        <button class="shopping-button">Alışverişe Başla</button>
+        <button class="shopping-button" @click="goToHome">Alışverişe Başla</button>
       </div>
     </div>
   </template>
   
-  <script>
+  <script lang="ts">
+  import SepetNavbar from '~/layouts/SepetNavbar.vue'
+
   export default {
+    components: {
+    SepetNavbar
+  },
     data() {
       return {
         cartCount: 0,  // Sepetteki ürün sayısını dinamik olarak başlatıyoruz
@@ -32,7 +38,11 @@
         if (this.cartCount > 0) {
           this.cartCount -= 1;  // Sepetteki ürün sayısını azalt
         }
-      }
+      },
+      // Alışverişe Başla butonuna tıklandığında yönlendirme
+    goToHome() {
+      this.$router.push('/');  // Ana sayfaya yönlendirir
+    }
     },
   };
   </script>

@@ -17,7 +17,7 @@
     "font-awesome": "^4.7.0",
     "nuxt": "^3.14.1592",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^3.0.2",

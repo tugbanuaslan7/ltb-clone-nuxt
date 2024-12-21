@@ -2,16 +2,20 @@
   <nav class="navbar">
     <!-- Logo -->
     <div class="logo">
+      <router-link to="/">
       <img src="/assets/images/ltb-logo.png" alt="Logo" />
+      </router-link>
     </div>
 
     <!-- Menü -->
     <ul class="menu">
       <li @mouseenter="showJean" @mouseleave="hideJean">
-        <a href="#">Jean</a></li>
+        <a href="#">Jean</a>
+      </li>
 
       <li @mouseenter="showKadin" @mouseleave="hideKadin">
-      <a href="#">Kadın</a></li>
+        <a href="#">Kadın</a>
+      </li>
 
       <li><a href="#">Erkek</a></li>
       <li><a href="#">Çocuk</a></li>
@@ -43,11 +47,11 @@
 
     <!-- Sağdaki Eylemler -->
     <div class="actions">
-      <button class="login-btn">
+      <button class="login-btn" @click="goToLogin">
         <i class="bi bi-person"></i> <!-- Bootstrap User İkonu -->
-        <span>Hesabım</span>
+        <span>GirişYap</span>
       </button>
-      <button class="cart-btn">
+      <button class="cart-btn" @click="goToSepetim">
         <i class="bi bi-cart"></i> <!-- Bootstrap Shopping Cart İkonu -->
         <span>Sepet</span>
       </button>
@@ -82,6 +86,18 @@
 import { ref, onMounted } from 'vue';
 import Jean from '~/components/Jean.vue';
 import Kadin from '~/components/Kadin.vue';
+import { useRouter } from 'vue-router'; // Vue Router'ı import et
+
+const router = useRouter(); // useRouter hook'unu kullan
+
+const goToLogin = () => {
+  router.push('/Giris'); // Login sayfasına yönlendir
+};
+
+const goToSepetim = () => {
+  router.push('/Sepet'); // 'Sepetim' route'una yönlendirir
+};
+
 
 // Durum değişkenleri
 const isJeanVisible = ref(false); // Jean bileşeni görünür mü?
@@ -178,6 +194,16 @@ onMounted(() => {
   margin-top: -1px;
   margin-left: 0px;
   /* bunda menu ogeleri biraz daha saga kayması gerekiyor */
+}
+
+/* Mobil cihazlar için responsive düzenleme */
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+    /* Mobilde menü gizlenecek */
+    flex-direction: column;
+    gap: 15px;
+  }
 }
 
 .menu a {

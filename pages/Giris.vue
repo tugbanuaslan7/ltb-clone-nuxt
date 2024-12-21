@@ -164,6 +164,8 @@ button {
     /* Kenar boşluklarını genişlikten hariç tutmak için */
 }
 
+
+
 .google-login {
     background-color: #e8e6e6;
     color: rgb(0, 0, 0);
@@ -274,4 +276,6 @@ p router-link:hover {
 .signup-button:hover {
     border-color: red;
 }
+
+
 </style>
