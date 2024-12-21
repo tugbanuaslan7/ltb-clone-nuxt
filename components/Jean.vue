@@ -8,13 +8,9 @@
           <ul class="menu">
             <li @mouseenter="showJean" @mouseleave="checkToHideJean">
               <!-- Jean Popup -->
-        <div
-          v-if="showJeanPopup"
-          class="popup"
-          @mouseenter="popupHovered = true"
-          @mouseleave="popupHovered = false"
-        >
-          <Jean />
+              <div v-if="showJeanPopup" class="popup" @mouseenter="popupHovered = true"
+                @mouseleave="popupHovered = false">
+                <Jean />
               </div>
             </li>
             <li><a href="#">Kadın</a></li>
@@ -78,14 +74,14 @@
 export default {
   data() {
     return {
-      showPopup: false, // Jean popup'ının görünürlüğü
+      showJeanPopup: false, // Jean popup'ının görünürlüğü
       popupHovered: false, // Popup içine fare girip girmediği
     };
   },
   methods: {
     // Jean menüsüne fare gelince popup'ı göster
     showJean() {
-      this.showPopup = true;
+      this.showJeanPopup = true;
     },
     // Jean menüsünden fare çıkınca popup'ı gizle
     checkToHideJean() {

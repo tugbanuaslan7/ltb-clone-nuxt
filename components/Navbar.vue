@@ -8,10 +8,11 @@
     <!-- Menü -->
     <ul class="menu">
       <li @mouseenter="showJean" @mouseleave="hideJean">
-        <a href="#">Jean</a>
-        
-      </li>
-      <li><a href="#">Kadın</a></li>
+        <a href="#">Jean</a></li>
+
+      <li @mouseenter="showKadin" @mouseleave="hideKadin">
+      <a href="#">Kadın</a></li>
+
       <li><a href="#">Erkek</a></li>
       <li><a href="#">Çocuk</a></li>
       <li><a href="#">Outlet</a></li>
@@ -19,18 +20,18 @@
     </ul>
 
     <!-- Jean içeriği -->
-    <div
-      :class="{ 'jean-container': true, active: isJeanVisible }"
-      @mouseenter="enterJean"
-      @mouseleave="leaveJean"
-    >
+    <div :class="{ 'popup-container': true, active: isJeanVisible }" @mouseenter="enterJean" @mouseleave="leaveJean">
       <Jean />
     </div>
 
+    <!-- Kadın içeriği -->
+    <div :class="{ 'popup-container': true, active: isKadinVisible }" @mouseenter="enterKadin" @mouseleave="leaveKadin">
+      <Kadin />
+    </div>
+
+
 
     <!-- Arama Çubuğu -->
-
-
     <div class="search-bar">
       <input type="text" placeholder="Arama Yap" />
       <button type="submit" class="search-button">
@@ -58,8 +59,12 @@
   </nav>
 
   <!-- Jean Bileşenini Navbar'ın Altında Göster -->
-  <div v-if="isJeanVisible" class="jean-container">
+  <div v-if="isJeanVisible" class="popup-container" @mouseenter="enterJean" @mouseleave="leaveJean">
     <Jean />
+  </div>
+
+  <div v-if="isKadinVisible" class="popup-container" @mouseenter="enterKadin" @mouseleave="leaveKadin">
+    <Kadin />
   </div>
 
 
@@ -76,11 +81,14 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import Jean from '~/components/Jean.vue';
-
+import Kadin from '~/components/Kadin.vue';
 
 // Durum değişkenleri
 const isJeanVisible = ref(false); // Jean bileşeni görünür mü?
 const isMouseInsideJean = ref(false); // Fare Jean menüsü veya içeriği üzerinde mi?
+
+const isKadinVisible = ref(false);
+const isMouseInsideKadin = ref(false);
 
 // Olaylar
 const showJean = () => (isJeanVisible.value = true);
@@ -95,6 +103,17 @@ const leaveJean = () => {
   hideJean();
 };
 
+const showKadin = () => (isKadinVisible.value = true);
+const hideKadin = () => {
+  if (!isMouseInsideKadin.value) {
+    isKadinVisible.value = false;
+  }
+};
+const enterKadin = () => (isMouseInsideKadin.value = true); // Fare içeride
+const leaveKadin = () => {
+  isMouseInsideKadin.value = false; // Fare çıktı
+  hideKadin();
+};
 
 // Mesajlar listesi
 const messages = [
@@ -298,7 +317,7 @@ onMounted(() => {
   /* Yazı rengini kırmızı yap */
 }
 
-.jean-container {
+.popup-container {
   position: absolute;
   top: 100%;
   left: 0;
@@ -311,7 +330,7 @@ onMounted(() => {
   transition: opacity 0.3s ease;
 }
 
-.jean-container.active {
+.popup-container.active {
   display: block;
 }
 

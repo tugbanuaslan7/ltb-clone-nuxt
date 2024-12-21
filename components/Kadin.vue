@@ -1,5 +1,5 @@
 <template>
-  <div class="kadin-page">
+  <div class="kadin-page" >
     <div class="categories">
       <!-- Birinci Sütun -->
       <div class="first-column">
@@ -75,9 +75,29 @@
       <a href="/kadin-products">
         <img src="/public/assets/images/kadin.jpeg" alt="Jean Fotoğrafı" />
       </a>
+
+      <!-- Popup yalnızca "isPopupVisible" doğruysa gösterilecek -->
+      <div v-if="isPopupVisible" class="popup">
+
+      </div>
     </div>
   </div>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+
+// Durum değişkeni
+const isPopupVisible = ref(false); // Popup görünür mü?
+
+// Olaylar
+const showPopup = () => {
+  isPopupVisible.value = true;
+};
+const hidePopup = () => {
+  isPopupVisible.value = false;
+};
+</script>
 
 <style scoped>
 .kadin-page {
@@ -165,5 +185,30 @@
   opacity: 0.7;
 }
 
+/* Popup stili */
+.popup {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.popup h3 {
+  margin: 0 0 10px 0;
+}
+
+.popup p {
+  margin: 0;
+}
 
 </style>
