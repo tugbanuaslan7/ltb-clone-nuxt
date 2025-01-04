@@ -37,6 +37,14 @@ export default defineNuxtConfig({
       ],
     },
   },
+
+  imports: {
+    autoImport: true,
+  },
+  
+  plugins: [
+    '~/plugins/firebase.ts', // Firebase eklentisi
+  ],
   
 
   compatibilityDate: '2024-11-30',

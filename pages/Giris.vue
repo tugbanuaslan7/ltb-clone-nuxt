@@ -164,6 +164,9 @@ button {
     /* Kenar boşluklarını genişlikten hariç tutmak için */
 }
 
+button[type="submit"]:hover {
+    background-color: rgb(210, 11, 11);
+}
 
 
 .google-login {

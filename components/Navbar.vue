@@ -38,7 +38,7 @@
     <!-- Arama Çubuğu -->
     <div class="search-bar">
       <input type="text" placeholder="Arama Yap" />
-      <button type="submit" class="search-button">
+      <button type="submit" class="search-button" @click="goToKategori">
         <i class="bi bi-search"></i>
       </button>
 
@@ -73,7 +73,7 @@
 
 
   <!-- İkinci Bar (alt bar) -->
-  <div class="secondary-navbar">
+  <div v-if="showSecondaryNavbar" class="secondary-navbar">
     <ul class="secondary-menu">
       <li v-for="(message, index) in messages" :key="index">
         <span v-if="index === messageIndex">{{ message }}</span>
@@ -89,6 +89,10 @@ import Kadin from '~/components/Kadin.vue';
 import { useRouter } from 'vue-router'; // Vue Router'ı import et
 
 const router = useRouter(); // useRouter hook'unu kullan
+
+const goToKategori = () => {
+  router.push('/Kategori');
+};
 
 const goToLogin = () => {
   router.push('/Giris'); // Login sayfasına yönlendir
@@ -147,6 +151,19 @@ onMounted(() => {
     // index sırasını değiştirerek yeni mesajı gösteriyoruz
     messageIndex.value = (messageIndex.value + 1) % messages.length;
   }, 3000); // Her 3 saniyede bir değişim
+});
+
+
+// Navbar'ın alt barını gösterip gizlemek için veri
+const showSecondaryNavbar = ref(true);
+
+// Vue Router ile sayfa değişimlerini izleyip navbar durumunu güncelle
+router.beforeEach((to) => {
+  if (to.name === 'Giris') {
+    showSecondaryNavbar.value = false;
+  } else {
+    showSecondaryNavbar.value = true;
+  }
 });
 </script>
 

@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import index from '~/pages/index.vue';
 import Navbar from '../components/Navbar.vue'; // Navbar sayfası
 import Jean from '../components/Jean.vue'; // Jean sayfası
 import Kadin from '../components/Kadin.vue';
@@ -7,10 +8,16 @@ import Sepet from '../pages/Sepet.vue';
 import Cart1 from '~/components/Cart1.vue';
 import Cart2 from '~/components/Cart2.vue';
 import Kategori from '~/components/Kategori.vue';
-import Footer from '~/components/Footer.vue';
-import Banner from '~/components/Banner.vue';
+// Banner ve Footer sadece ana sayfalarda kullanılacak, bu yüzden burada tanımlamıyoruz
+// import Footer from '~/components/Footer.vue';
+// import Banner from '~/components/Banner.vue';
 
 const routes = [
+  {
+    path: '/',
+    name: 'index', // Ana sayfa ismi
+    component: index, // Ana sayfa bileşeni
+  },
   {
     path: '/navbar',
     name: 'Navbar',
@@ -51,16 +58,7 @@ const routes = [
     name: 'Kategori',
     component: Kategori,
   },
-  {
-    path: '/footer',
-    name: 'Footer',
-    component: Footer,
-  },
-  {
-    path: '/banner',
-    name: 'Banner',
-    component: Banner,
-  },
+
 ];
 
 const router = createRouter({

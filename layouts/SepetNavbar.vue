@@ -1,7 +1,10 @@
 <template>
     <nav class="SepetNavbar">
-      <div class="logo">
-        <img src="/assets/images/ltb-logo.png" alt="LTB Logo" />
+       <!-- Logo -->
+    <div class="logo">
+      <router-link to="/">
+      <img src="/assets/images/ltb-logo.png" alt="Logo" />
+      </router-link>
       </div>
     </nav>
   </template>
