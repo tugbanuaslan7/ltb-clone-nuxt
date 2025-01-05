@@ -3,7 +3,7 @@
     <!-- Logo -->
     <div class="logo">
       <router-link to="/">
-      <img src="/assets/images/ltb-logo.png" alt="Logo" />
+        <img src="/assets/images/ltb-logo.png" alt="Logo" />
       </router-link>
     </div>
 
@@ -37,12 +37,15 @@
 
     <!-- Arama Çubuğu -->
     <div class="search-bar">
-      <input type="text" placeholder="Arama Yap" />
-      <button type="submit" class="search-button" @click="goToKategori">
+      <input type="text" v-model="searchQuery" placeholder="Arama Yap" @click="toggleSearchModal" />
+      <button type="submit" class="search-button" @click="handleSubmit">
         <i class="bi bi-search"></i>
       </button>
-
     </div>
+
+    <!-- SearchModal açılacak -->
+    <SearchModal v-if="showSearchModal" :searchQuery="searchQuery" @close="toggleSearchModal" />
+
 
 
     <!-- Sağdaki Eylemler -->
@@ -86,13 +89,24 @@
 import { ref, onMounted } from 'vue';
 import Jean from '~/components/Jean.vue';
 import Kadin from '~/components/Kadin.vue';
+import SearchModal from '~/components/SearchModal.vue';
 import { useRouter } from 'vue-router'; // Vue Router'ı import et
 
-const router = useRouter(); // useRouter hook'unu kullan
+const searchQuery = ref('');
+const showSearchModal = ref(false);
 
-const goToKategori = () => {
-  router.push('/Kategori');
+const toggleSearchModal = () => {
+  showSearchModal.value = !showSearchModal.value;
+  document.body.classList.toggle('modal-open');
 };
+
+const handleSubmit = (event) => {
+  event.preventDefault();
+  // Arama işlemi burada yapılacak
+  console.log('Arama yapıldı:', searchQuery.value);
+};
+
+const router = useRouter(); // useRouter hook'unu kullan
 
 const goToLogin = () => {
   router.push('/Giris'); // Login sayfasına yönlendir
@@ -109,6 +123,22 @@ const isMouseInsideJean = ref(false); // Fare Jean menüsü veya içeriği üzer
 
 const isKadinVisible = ref(false);
 const isMouseInsideKadin = ref(false);
+
+// Kategoriler listesi
+const categories = [
+  { title: 'KADIN', subtitle: 'JEANS' },
+  { title: 'KADIN', subtitle: 'TRİKO & HIRKA MODELLERİ' },
+  { title: 'ERKEK', subtitle: 'SWEATSHIRT' },
+  { title: 'ERKEK', subtitle: 'CEKET & MONT' },
+  { title: 'ERKEK', subtitle: 'TRİKO & HIRKA' },
+  { title: 'ERKEK', subtitle: 'JEANS' },
+  { title: 'ERKEK', subtitle: 'PANTOLON' },
+  { title: 'KADIN', subtitle: 'MONT MODELLERİ' },
+  { title: ' ', subtitle: 'WOMEN' },
+  { title: 'KAMPANYALAR', subtitle: 'KAMPANYALAR' },
+  { title: 'ERKEK', subtitle: 'GÖMLEK' },
+  { title: 'KADIN', subtitle: 'KADIN EŞOFMAN ALTI' },
+];
 
 // Olaylar
 const showJean = () => (isJeanVisible.value = true);
@@ -182,6 +212,15 @@ router.beforeEach((to) => {
   z-index: 10;
 }
 
+.modal-open {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
 
 
 /* Tarayıcı varsayılan margin ve padding değerlerini sıfırla */

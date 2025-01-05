@@ -4,6 +4,8 @@
     
     <main>
       <NuxtPage />
+
+      
     </main>
 
     <!-- Banner sadece belirli sayfalarda görüntülenecek -->
