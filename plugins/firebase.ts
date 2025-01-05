@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
+import { defineNuxtPlugin } from '#app';
 import { initializeApp } from "firebase/app";
 import { getFirestore  } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -16,8 +18,12 @@ const firebaseConfig = {
   measurementId: "G-8V789ZD14R"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+export default defineNuxtPlugin((nuxtApp) => {
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app); // Add getAuth for authentication
 
-export { db };
+  // Make these Firebase instances available to your components
+  nuxtApp.provide('db', db);
+  nuxtApp.provide('auth', auth); // Provide the auth instance as well
+});

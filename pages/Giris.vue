@@ -47,6 +47,9 @@
 </template>
 
 <script>
+
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+
 export default {
     data() {
         return {
@@ -56,11 +59,25 @@ export default {
         }
     },
     methods: {
-        handleSubmit() {
-            // Giriş işlemleri (API çağrısı vb.) burada yapılacak
-            console.log('Giriş yapılıyor:', this.email, this.password, this.rememberMe);
-        }
+    async handleSubmit() {
+      const auth = getAuth();
+      try {
+        await signInWithEmailAndPassword(auth, this.email, this.password)
+          .then((userCredential) => {
+            // Giriş başarılı olduğunda yapılacak işlemler
+            console.log('Giriş yapıldı:', userCredential.user);
+            this.$router.push('/');
+          })
+          .catch((error) => {
+            // Hata oluştuğunda yapılacak işlemler
+            console.error('Hata:', error.code);
+            this.$router.push('/');
+          });
+      } catch (error) {
+        console.error(error);
+      }
     }
+  }
 }
 </script>
 

@@ -23,8 +23,8 @@
   height: 70px;
   background-color: #fff;
   border-bottom: 2px solid #ded7d7; /* Alt çizgi */
-  padding-top: 20px;
-  padding-bottom: 30px;
+  padding-top: 50px;
+  padding-bottom: 40px;
 }
 
 .logo img {

@@ -21,6 +21,11 @@ export default defineNuxtConfig({
     'bootstrap/dist/css/bootstrap.min.css',
   ],
 
+  typescript: {
+    shim: false, // Nuxt'un typescript desteğini doğru yapılandırmak için shim'i kapatabilirsiniz.
+    strict: true,
+  },
+
   app: {
     head: {
       link: [

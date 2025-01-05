@@ -1,6 +1,7 @@
 <template>
   <div>
     <Navbar v-if="$route.name !== 'Sepet'" />
+    
     <main>
       <NuxtPage />
     </main>
