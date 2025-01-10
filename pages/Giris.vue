@@ -1,85 +1,79 @@
 <template>
     <div class="login-container">
-        <!-- Dikey Çizgi Ortada -->
-        <div class="vertical-line"></div>
-
-        <!-- Form Sol Tarafa Ortalanmış -->
-        <div class="form-container">
-            <h2>Giriş Yap</h2>
-            <form @submit.prevent="handleSubmit">
-                <div class="input-container">
-                    <label for="email">*E-mail</label>
-                    <input type="email" id="email" v-model="email" required>
-                </div>
-                <div class="input-container">
-                    <label for="password">*Şifre</label>
-                    <input type="password" id="password" v-model="password" required>
-                </div>
-                <div class="remember-me">
-                    <input type="checkbox" id="rememberMe" v-model="rememberMe">
-                    <label for="rememberMe">Oturumu Açık Tut</label>
-                </div>
-
-                <p><a href="/forget">Şifreni mi unuttun?</a></p>
-                <button type="submit">Giriş Yap</button>
-
-                <button class="google-login">
-                    <i class="bi bi-google"></i> Google ile Giriş Yap
-                </button>
-            </form>
-        </div>
-
-
-        <!-- Sağ Tarafa Resim ve Buton -->
-        <div class="image-container">
-            <img src="https://www.ltbjeans.com/medias/hesab-n-z-yok-mu.jpg?context=bWFzdGVyfGltYWdlc3w3NjMwOHxpbWFnZS9qcGVnfGFHRmpMMmc0TlM4NU1UYzFNak00TmpNNU5qUTJMMmhsYzJGaTRwU0E0cGFTYnVLVWdPS1drbnBmZVc5clgyMTFMbXB3Wnd8NWFhNTYxNGFiOTg1MzI0NmJmYjY3MGJkODI0OWRiMzA5Y2FlMDhkMWUzZjhhZGYzZDZmY2I4YWUwMWI1ZDhiZg"
-                alt="Hesabınız Yok Mu?" />
-            <button class="signup-button">Hemen Kayıt Ol</button>
-
-
-
-
-
-        </div>
-
-
+      <!-- Dikey Çizgi Ortada -->
+      <div class="vertical-line"></div>
+  
+      <!-- Form Sol Tarafa Ortalanmış -->
+      <div class="form-container">
+        <h2>Giriş Yap</h2>
+        <form @submit.prevent="handleSubmit">
+          <div class="input-container">
+            <label for="email">*E-mail</label>
+            <input type="email" id="email" v-model="email" required />
+          </div>
+          <div class="input-container">
+            <label for="password">*Şifre</label>
+            <input type="password" id="password" v-model="password" required />
+          </div>
+          <div class="remember-me">
+            <input type="checkbox" id="rememberMe" v-model="rememberMe" />
+            <label for="rememberMe">Oturumu Açık Tut</label>
+          </div>
+  
+          <p><a href="/forget">Şifreni mi unuttun?</a></p>
+          <button type="submit">Giriş Yap</button>
+  
+          <button class="google-login">
+            <i class="bi bi-google"></i> Google ile Giriş Yap
+          </button>
+        </form>
+      </div>
+  
+      <!-- Sağ Tarafa Resim ve Buton -->
+      <div class="image-container">
+        <img
+          src="https://www.ltbjeans.com/medias/hesab-n-z-yok-mu.jpg?context=bWFzdGVyfGltYWdlc3w3NjMwOHxpbWFnZS9qcGVnfGFHRmpMMmc0TlM4NU1UYzFNak00TmpNNU5qUTJMMmhsYzJGaTRwU0E0cGFTYnVLVWdPS1drbnBmZVc5clgyMTFMbXB3Wnd8NWFhNTYxNGFiOTg1MzI0NmJmYjY3MGJkODI0OWRiMzA5Y2FlMDhkMWUzZjhhZGYzZDZmY2I4YWUwMWI1ZDhiZg"
+          alt="Hesabınız Yok Mu?"
+        />
+        <button class="signup-button">Hemen Kayıt Ol</button>
+      </div>
     </div>
-</template>
-
-<script>
-
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-
-export default {
+  </template>
+  
+  <script>
+  import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+  import { useAuthStore } from '~/stores/auth'; // Pinia store'u import et
+  
+  export default {
     data() {
-        return {
-            email: '',
-            password: '',
-            rememberMe: false
-        }
+      return {
+        email: '',
+        password: '',
+        rememberMe: false
+      };
     },
     methods: {
-    async handleSubmit() {
-      const auth = getAuth();
-      try {
-        await signInWithEmailAndPassword(auth, this.email, this.password)
-          .then((userCredential) => {
-            // Giriş başarılı olduğunda yapılacak işlemler
-            console.log('Giriş yapıldı:', userCredential.user);
-            this.$router.push('/');
-          })
-          .catch((error) => {
-            // Hata oluştuğunda yapılacak işlemler
-            console.error('Hata:', error.code);
-            this.$router.push('/');
-          });
-      } catch (error) {
-        console.error(error);
+      async handleSubmit() {
+        const auth = getAuth();
+        try {
+          const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
+          const user = userCredential.user;
+  
+          // Kullanıcıyı Pinia store'unda kaydet
+          const authStore = useAuthStore();
+          authStore.setUser(user);
+  
+          console.log('Giriş yapıldı:', user);
+          this.$router.push('/'); // Giriş başarılıysa ana sayfaya yönlendir
+        } catch (error) {
+          // Hata oluştuğunda yapılacak işlemler
+          console.error('Hata:', error.code);
+          this.$router.push('/'); // Hata durumunda ana sayfaya yönlendir
+        }
       }
     }
-  }
-}
-</script>
+  };
+  </script>
 
 <style scoped>
 .login-container {

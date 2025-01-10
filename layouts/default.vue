@@ -4,6 +4,7 @@
     
     <main>
       <NuxtPage />
+      <ProductCarousel />
 
       
     </main>
@@ -22,6 +23,7 @@ import { useRoute } from 'vue-router';
 import Navbar from '~/components/Navbar.vue';
 import Footer from '~/components/Footer.vue';
 import Banner from '~/components/Banner.vue';
+import ProductCarousel from '~/components/ProductCarousel.vue';
 
 // Aktif rotayı almak için `useRoute` kullanıyoruz
 const route = useRoute();
@@ -39,32 +41,38 @@ const shouldShowFooter = computed(() =>allowedRoutesForFooter.includes(route.nam
 </script>
 
 <style scoped>
-.layout {
-  display: flex;
-  height: 100vh;
-}
-
 main {
   flex: 1;
-  padding: 20px;
+  padding: 0; /* Tüm paddingleri kaldır */
   overflow-y: auto;
 }
 
-footer {
-  background-color: #f8f8f8;
-  text-align: center;
-  padding: 10px 0;
-  font-size: 14px;
-  color: #666;
-  border-top: 1px solid #ddd;
+.carousel-container {
+  width: 100%;
+  margin: 0; /* Kenarlardan boşluk kaldır */
+  padding: 0; /* Dolgu kaldır */
+  position: relative;
 }
 
-.banner {
-  background-color: #e3f2fd;
-  text-align: center;
-  padding: 15px 0;
-  font-size: 16px;
-  color: #333;
-  border-bottom: 1px solid #ccc;
+.carousel-image {
+  width: 100%; /* Ekranın tamamını kapla */
+  height: auto;
+  object-fit: cover;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+div {
+  margin: 0;
+  padding: 0;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 </style>

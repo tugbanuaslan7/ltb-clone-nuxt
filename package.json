@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^3.0.2",
+    "@types/firebase": "^2.4.32",
     "typescript": "^5.7.2"
   }
 }
