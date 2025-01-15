@@ -26,6 +26,7 @@ export default defineNuxtConfig({
     shim: false, // Nuxt'un typescript desteğini doğru yapılandırmak için shim'i kapatabilirsiniz.
     strict: true,
   },
+  
 
   app: {
     head: {

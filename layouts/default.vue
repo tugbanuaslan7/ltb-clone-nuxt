@@ -1,19 +1,17 @@
 <template>
   <div>
+    <!-- Navbar tüm sayfalarda görünür, 'Sepet' sayfası hariç -->
     <Navbar v-if="$route.name !== 'Sepet'" />
     
     <main>
       <NuxtPage />
-      <ProductCarousel />
-
-      
     </main>
 
-    <!-- Banner sadece belirli sayfalarda görüntülenecek -->
-    <Banner v-if="shouldShowBanner" />
-
-    <!-- Footer sadece belirli sayfalarda görüntülenecek -->
-    <Footer v-if="shouldShowFooter" />
+    <!-- Ana sayfada tüm bileşenler görüntülenecek -->
+    <ProductCarousel v-if="isIndexPage" />
+    <Visual v-if="isIndexPage" />
+    <Banner v-if="isIndexPage" />
+    <Footer v-if="isIndexPage" />
   </div>
 </template>
 
@@ -24,20 +22,14 @@ import Navbar from '~/components/Navbar.vue';
 import Footer from '~/components/Footer.vue';
 import Banner from '~/components/Banner.vue';
 import ProductCarousel from '~/components/ProductCarousel.vue';
+import Visual from '~/components/Visual.vue';
+import KadinJean from '~/pages/KadinJean.vue';
 
 // Aktif rotayı almak için `useRoute` kullanıyoruz
 const route = useRoute();
 
-// Banner'ın görüntüleneceği sayfaları belirliyoruz
-const allowedRoutesForBanner = ['index'];
-
-// Footer'ın görüntüleneceği sayfaları belirliyoruz
-const allowedRoutesForFooter = ['index'];
-
-// Aktif sayfanın Banner ve Footer için uygun olup olmadığını kontrol ediyoruz
-const shouldShowBanner = computed(() =>allowedRoutesForBanner.includes(route.name));
-const shouldShowFooter = computed(() =>allowedRoutesForFooter.includes(route.name));
-
+// Ana sayfa kontrolü
+const isIndexPage = computed(() => route.name === 'index');
 </script>
 
 <style scoped>

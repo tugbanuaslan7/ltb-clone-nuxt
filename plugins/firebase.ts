@@ -1,29 +1,30 @@
-// Import the functions you need from the SDKs you need
+// plugins/firebase.ts
 import { defineNuxtPlugin } from '#app';
-import { initializeApp } from "firebase/app";
-import { getFirestore  } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { initializeApp } from 'firebase/app';
+import { getFirestore, Firestore } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDEYI1RgY8EU1VXtuceYuDqbnGhgCc0aS4",
-  authDomain: "ltb-clone-nuxt.firebaseapp.com",
-  projectId: "ltb-clone-nuxt",
-  storageBucket: "ltb-clone-nuxt.firebasestorage.app",
-  messagingSenderId: "1058531883130",
-  appId: "1:1058531883130:web:b2c7f5a0e89c0c8a1463c3",
-  measurementId: "G-8V789ZD14R"
+  apiKey: 'AIzaSyDEYI1RgY8EU1VXtuceYuDqbnGhgCc0aS4',
+  authDomain: 'ltb-clone-nuxt.firebaseapp.com',
+  projectId: 'ltb-clone-nuxt',
+  storageBucket: 'ltb-clone-nuxt.firebasestorage.app',
+  messagingSenderId: '1058531883130',
+  appId: '1:1058531883130:web:b2c7f5a0e89c0c8a1463c3',
+  measurementId: 'G-8V789ZD14R',
 };
 
-export default defineNuxtPlugin((nuxtApp) => {
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const auth = getAuth(app); // Add getAuth for authentication
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app) as Firestore; // db'yi Firestore tipiyle tanımlıyoruz
+const auth = getAuth(app);
 
-  // Make these Firebase instances available to your components
-  nuxtApp.provide('db', db);
-  nuxtApp.provide('auth', auth); // Provide the auth instance as well
+
+// Nuxt Plugin
+export default defineNuxtPlugin(() => {
+  return {
+    provide: {
+      db,
+      auth,
+    },
+  };
 });

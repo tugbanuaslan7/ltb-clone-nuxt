@@ -14,7 +14,7 @@
       </li>
 
       <li @mouseenter="showKadin" @mouseleave="hideKadin">
-        <a href="#">Kadın</a>
+        <router-link to="/KadinJean"> Kadın</router-link>
       </li>
 
       <li><a href="#">Erkek</a></li>
@@ -37,11 +37,27 @@
 
     <!-- Arama Çubuğu -->
     <div class="search-bar">
-      <input type="text" v-model="searchQuery" placeholder="Arama Yap" @click="toggleSearchModal" />
+      <input
+        type="text"
+        v-model="searchQuery"
+        placeholder="Arama Yap"
+        @click="toggleSearchModal"
+        @input="handleSearch"
+      />
       <button type="submit" class="search-button" @click="handleSubmit">
         <i class="bi bi-search"></i>
       </button>
     </div>
+
+    <div v-for="(product, index) in filteredProducts" :key="index">
+    <div v-if="index === 0">
+      <Cart1 :product="product" />
+    </div>
+    <div v-if="index === 1">
+      <Cart2 :product="product" />
+    </div>
+  </div>
+
 
     <!-- SearchModal açılacak -->
     <SearchModal v-if="showSearchModal" :searchQuery="searchQuery" @close="toggleSearchModal" />
@@ -91,20 +107,56 @@ import Jean from '~/components/Jean.vue';
 import Kadin from '~/components/Kadin.vue';
 import SearchModal from '~/components/SearchModal.vue';
 import { useRouter } from 'vue-router'; // Vue Router'ı import et
+import { useProducts } from '@/stores/productsStore';
+import Cart1 from '~/components/Cart1.vue';
+import Cart2 from '~/components/Cart2.vue';
+import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
+ 
+const db = getFirestore();
 
-const searchQuery = ref('');
+const { searchQuery, products, searchProducts } = useProducts(); // Pinia Store'dan al
+
 const showSearchModal = ref(false);
 
+const filteredProducts = ref([]);
+
+
+
+// Arama işlemi her yazıldıkça çalışacak
+const handleSearch = async () => {
+  await searchProducts(); // Pinia'daki searchProducts fonksiyonunu çağır
+  filteredProducts.value = products.value; // Ürünleri filtrele
+};
+
+
+// Firebase'den ürünleri al
+onMounted(async () => {
+  // Başlangıçta tüm ürünleri çek
+  await fetchProducts();
+});
+
+
+// Firebase'den ürünleri çekme ve filtreleme
+const fetchProducts = async () => {
+  try {
+    const q = searchQuery.value.trim() 
+      ? query(collection(db, 'products'), where("name", "==", searchQuery.value)) // Arama sorgusuna göre filtrele
+      : collection(db, 'products'); // Arama yoksa tüm ürünleri getir
+
+    const querySnapshot = await getDocs(q);
+    products.value = querySnapshot.docs.map(doc => doc.data());
+    filteredProducts.value = [...products.value]; // Başlangıçta tüm ürünler
+  } catch (error) {
+    console.error("Veri çekme hatası:", error);
+  }
+};
+
+// Modal açma fonksiyonu
 const toggleSearchModal = () => {
   showSearchModal.value = !showSearchModal.value;
   document.body.classList.toggle('modal-open');
 };
 
-const handleSubmit = (event) => {
-  event.preventDefault();
-  // Arama işlemi burada yapılacak
-  console.log('Arama yapıldı:', searchQuery.value);
-};
 
 const router = useRouter(); // useRouter hook'unu kullan
 
@@ -115,6 +167,8 @@ const goToLogin = () => {
 const goToSepetim = () => {
   router.push('/Sepet'); // 'Sepetim' route'una yönlendirir
 };
+
+
 
 
 // Durum değişkenleri
@@ -170,7 +224,7 @@ const messages = [
   '25 Kasım - 2 Aralık Tarihleri Arasında Ücretsiz Kargo Fırsatı!',
   'Sonbahar / Kış Koleksiyonunda Geçerli NET %30 İndirim!',
   'Hemen Üye Ol! Üyelere Özel İlk Alışverişlerinizde Geçerli %15 İndirim Şansını Yakala!',
-]
+];
 
 // Hangi mesajın gösterileceğini takip eden reaktif değişken
 const messageIndex = ref(0);
@@ -182,7 +236,6 @@ onMounted(() => {
     messageIndex.value = (messageIndex.value + 1) % messages.length;
   }, 3000); // Her 3 saniyede bir değişim
 });
-
 
 // Navbar'ın alt barını gösterip gizlemek için veri
 const showSecondaryNavbar = ref(true);
@@ -196,6 +249,7 @@ router.beforeEach((to) => {
   }
 });
 </script>
+
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;700&display=swap');

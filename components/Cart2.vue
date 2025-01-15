@@ -5,27 +5,26 @@
                 @mousemove="handleMouseMove">
                 <img :src="currentImage" alt="Product Image" class="product-image" />
                 <div class="icons">
-                    <i class="bi bi-cart"></i>
+                    <i class="bi bi-cart" @click="addToCart"></i>
                     <i class="bi bi-heart"></i>
                 </div>
                 <div class="indicators">
                     <span v-for="(image, index) in images" :key="index"
                         :class="['indicator', { active: currentIndex === index }]"></span>
                 </div>
-                <div class="product-name">Wanda Yüksek Bel Düz Paça Straight Jean Pantolon</div>
+                <div class="product-name">{{ product.name }}</div>
                 <div class="product-info">
                     <div class="discount">
-                        <span>%25</span>
+                        <span>{{ product.discount }}%</span>
                         <span>indirim</span>
                     </div>
                     <span class="vertical-line"></span>
-                    <span class="current-price">712,49 TL</span>
-                    <span class="original-price">949,99 TL</span>
+                    <span class="current-price">{{ product.currentPrice }} TL</span>
+                    <span class="original-price">{{ product.originalPrice }} TL</span>
                 </div>
                 <div class="color-indicators">
-                    <div class="color-indicator" style="background-color: rgb(55, 58, 87);"></div>
-                    <div class="color-indicator" style="background-color: rgb(81, 87, 131);"></div>
-                    <div class="color-indicator" style="background-color: #10104c;"></div>
+                    <div v-for="(color, index) in product.colors" :key="index" class="color-indicator"
+                        :style="{ backgroundColor: color }"></div>
                 </div>
             </div>
         </div>
@@ -33,17 +32,35 @@
 </template>
 
 <script setup>
-import { ref, onUnmounted } from 'vue';
+import { ref } from 'vue';
+import { useCartStore } from '~/stores/cart'; // Pinia store'u içe aktar
 
-const images = [
-    '/assets/images/wanda-1.jpg',
-    '/assets/images/wanda-2.jpg',
-    '/assets/images/wanda-3.jpg',
-    '/assets/images/wanda-4.jpg',
-    '/assets/images/wanda-5.jpg',
-];
+// Pinia store'u oluşturma
+const cartStore = useCartStore();
+
+// Sabit Ürün Verisi
+const product = ref({
+    id: 1, // Ürüne benzersiz bir ID ekledim
+    name: 'Wanda Yüksek Bel Düz Paça Straight Jean Pantolon',
+    discount: 25,
+    currentPrice: 712.49,
+    originalPrice: 949.99,
+    images: [
+        '/assets/images/wanda-1.jpg',
+        '/assets/images/wanda-2.jpg',
+        '/assets/images/wanda-3.jpg',
+        '/assets/images/wanda-4.jpg',
+        '/assets/images/wanda-5.jpg',
+    ],
+    colors: [
+        'rgb(55, 58, 87)', 'rgb(81, 87, 131)', '#10104c'
+    ]
+});
+
+// Sabit Görseller
+const images = ref(product.value.images);
 const currentIndex = ref(0);
-const currentImage = ref(images[currentIndex.value]);
+const currentImage = ref(images.value[currentIndex.value]);
 
 let interval;
 let lastMouseX = ref(0);
@@ -51,13 +68,13 @@ let debounceTimeout;
 
 const startImageRotation = () => {
     interval = setInterval(() => {
-        if (currentIndex.value < images.length - 1) {
+        if (currentIndex.value < images.value.length - 1) {
             currentIndex.value++;
-            currentImage.value = images[currentIndex.value];
+            currentImage.value = images.value[currentIndex.value];
         } else {
             clearInterval(interval); // Son fotoğrafa ulaşıldığında döngüyü durdur
         }
-    }, 3000); // Değişim süresi 3000 milisaniye (3 saniye) olarak ayarlandı
+    }, 3000); // 3 saniye
 };
 
 const stopImageRotation = () => {
@@ -70,15 +87,18 @@ const handleMouseMove = (event) => {
     lastMouseX.value = event.clientX;
 
     debounceTimeout = setTimeout(() => {
-        if (direction > 0 && currentIndex.value < images.length - 1) {
-            // Mouse moved right and stopped
+        if (direction > 0 && currentIndex.value < images.value.length - 1) {
             currentIndex.value++;
         } else if (direction < 0 && currentIndex.value > 0) {
-            // Mouse moved left and stopped
             currentIndex.value--;
         }
-        currentImage.value = images[currentIndex.value];
+        currentImage.value = images.value[currentIndex.value];
     }, 300); // 300 milisaniye gecikme
+};
+
+// Sepete ekleme işlevi
+const addToCart = () => {
+    cartStore.addToCart(product.value); // Sepete ürün ekler
 };
 
 onUnmounted(() => {
@@ -86,6 +106,7 @@ onUnmounted(() => {
     clearTimeout(debounceTimeout);
 });
 </script>
+
 <style scoped>
 .cart2-wrapper {
     display: flex;
@@ -106,9 +127,12 @@ onUnmounted(() => {
 }
 
 .cart-frame {
-    display: flex; /* Flexbox kullanarak ortalama */
-    justify-content: center; /* Yatayda ortala */
-    align-items: center; /* Dikeyde ortala */
+    display: flex;
+    /* Flexbox kullanarak ortalama */
+    justify-content: center;
+    /* Yatayda ortala */
+    align-items: center;
+    /* Dikeyde ortala */
     padding: 10px;
     border: 2px solid transparent;
     background-color: transparent;
@@ -133,18 +157,28 @@ onUnmounted(() => {
 }
 
 .icons i {
-    width: 30px; /* Çerçevenin genişliği ve yüksekliği (daha küçük boyut) */
+    width: 30px;
+    /* Çerçevenin genişliği ve yüksekliği (daha küçük boyut) */
     height: 30px;
-    font-size: 14px; /* İkon boyutu (daha küçük) */
+    font-size: 14px;
+    /* İkon boyutu (daha küçük) */
     font-weight: 600;
-    color: black; /* İkon rengi */
-    background-color: white; /* Arka plan rengi */
-    padding: 0; /* İç boşluğu kaldır */
-    border-radius: 50%; /* Tam yuvarlak */
-    display: flex; /* İkonu ortalamak için */
-    align-items: center; /* Dikey ortalama */
-    justify-content: center; /* Yatay ortalama */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Hafif bir gölge */
+    color: black;
+    /* İkon rengi */
+    background-color: white;
+    /* Arka plan rengi */
+    padding: 0;
+    /* İç boşluğu kaldır */
+    border-radius: 50%;
+    /* Tam yuvarlak */
+    display: flex;
+    /* İkonu ortalamak için */
+    align-items: center;
+    /* Dikey ortalama */
+    justify-content: center;
+    /* Yatay ortalama */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Hafif bir gölge */
 }
 
 .icons i:hover {
@@ -257,6 +291,7 @@ onUnmounted(() => {
     height: 12px;
     border-radius: 50%;
     /* Tam yuvarlak şekil */
-    cursor: default; /* İmleci değiştirmemek için ekledik */
+    cursor: default;
+    /* İmleci değiştirmemek için ekledik */
 }
 </style>

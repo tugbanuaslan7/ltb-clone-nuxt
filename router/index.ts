@@ -8,6 +8,7 @@ import Sepet from '../pages/Sepet.vue';
 import Cart1 from '~/components/Cart1.vue';
 import Cart2 from '~/components/Cart2.vue';
 import Kategori from '~/components/Kategori.vue';
+import KadinJean from '~/pages/KadinJean.vue';
 // Banner ve Footer sadece ana sayfalarda kullanılacak, bu yüzden burada tanımlamıyoruz
 // import Footer from '~/components/Footer.vue';
 // import Banner from '~/components/Banner.vue';
@@ -57,6 +58,11 @@ const routes = [
     path: '/kategori',
     name: 'Kategori',
     component: Kategori,
+  },
+  {
+    path: '/kadin-jean',
+    name: 'KadinJean',
+    component: () => import('~/pages/KadinJean.vue'),
   },
 
 ];
