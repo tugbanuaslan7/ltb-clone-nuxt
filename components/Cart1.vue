@@ -7,7 +7,7 @@
                 <img :src="currentImage" alt="Product Image" class="product-image" />
                 <div class="icons">
                     <i class="bi bi-cart" @click="addProductToCart"></i>
-                    <i class="bi bi-heart"></i>
+                    <i class="bi bi-heart" @click="addToFavorites"></i>
                 </div>
                 <div class="indicators">
                     <span v-for="(image, index) in images" :key="index"
@@ -92,6 +92,11 @@ const handleMouseMove = (event) => {
         }
         currentImage.value = images.value[currentIndex.value];
     }, 300); // 300 milisaniye gecikme
+};
+
+// Favorilere Ürün Ekleme
+const addToFavorites = () => {
+    cartStore.addToFavorites(product.value);
 };
 
 // Sepete Ürün Ekleme

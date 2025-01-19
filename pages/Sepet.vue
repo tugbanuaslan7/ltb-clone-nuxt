@@ -11,7 +11,7 @@
     <h3 v-else>Sepetinizde {{ cartStore.cartCount }} ürün bulunmaktadır.</h3> <!-- Sepette ürün var ise miktarı gösterir -->
 
     <div v-for="item in cartStore.items" :key="item.id" class="cart-item">
-      <p>{{ item.name }} - {{ item.price }}₺</p>
+      <p>{{ item.name }}</p>
       <button @click="removeItem(item.id)">Kaldır</button>
     </div>
 

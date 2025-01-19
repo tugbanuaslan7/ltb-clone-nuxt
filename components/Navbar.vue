@@ -18,16 +18,20 @@
       </li>
 
       <li @mouseenter="showErkek" @mouseleave="hideErkek">
-        <a href="#">Erkek</a></li>
+        <a href="#">Erkek</a>
+      </li>
 
       <li @mouseenter="showCocuk" @mouseleave="hideCocuk">
-        <a href="#">Çocuk</a></li>
+        <a href="#">Çocuk</a>
+      </li>
 
       <li @mouseenter="showOutlet" @mouseleave="hideOutlet">
-        <a href="#">Outlet</a></li>
+        <a href="#">Outlet</a>
+      </li>
 
       <li @mouseenter="showKampanyalar" @mouseleave="hideKampanyalar">
-        <a href="#">Kampanyalar</a></li>
+        <a href="#">Kampanyalar</a>
+      </li>
     </ul>
 
     <!-- Jean içeriği -->
@@ -48,11 +52,13 @@
       <Cocuk />
     </div>
 
-    <div :class="{ 'popup-container': true, active: isOutletVisible }" @mouseenter="enterOutlet" @mouseleave="leaveOutlet">
+    <div :class="{ 'popup-container': true, active: isOutletVisible }" @mouseenter="enterOutlet"
+      @mouseleave="leaveOutlet">
       <Outlet />
     </div>
 
-    <div :class="{ 'popup-container': true, active: isKampanyalarVisible }" @mouseenter="enterKampanyalar" @mouseleave="leaveKampanyalar">
+    <div :class="{ 'popup-container': true, active: isKampanyalarVisible }" @mouseenter="enterKampanyalar"
+      @mouseleave="leaveKampanyalar">
       <Kampanyalar />
     </div>
 
@@ -60,26 +66,21 @@
 
     <!-- Arama Çubuğu -->
     <div class="search-bar">
-      <input
-        type="text"
-        v-model="searchQuery"
-        placeholder="Arama Yap"
-        @click="toggleSearchModal"
-        @input="handleSearch"
-      />
+      <input type="text" v-model="searchQuery" placeholder="Arama Yap" @click="toggleSearchModal"
+        @input="handleSearch" />
       <button type="submit" class="search-button" @click="handleSubmit">
         <i class="bi bi-search"></i>
       </button>
     </div>
 
     <div v-for="(product, index) in filteredProducts" :key="index">
-    <div v-if="index === 0">
-      <Cart1 :product="product" />
+      <div v-if="index === 0">
+        <Cart1 :product="product" />
+      </div>
+      <div v-if="index === 1">
+        <Cart2 :product="product" />
+      </div>
     </div>
-    <div v-if="index === 1">
-      <Cart2 :product="product" />
-    </div>
-  </div>
 
 
     <!-- SearchModal açılacak -->
@@ -89,9 +90,21 @@
 
     <!-- Sağdaki Eylemler -->
     <div class="actions">
-      <button class="login-btn" @click="goToLogin">
-        <i class="bi bi-person"></i> <!-- Bootstrap User İkonu -->
+      <button class="bell-btn" @click="goToBildirimler">
+        <i class="bi bi-bell"></i>
+        <span>Bildirimler</span>
+      </button>
+      <button v-if="isLoggedIn" class="fav-btn" @click="goToFavoriler">
+        <i class="bi bi-heart"></i>
+        <span>Favoriler</span>
+      </button>
+      <button v-if="!isLoggedIn" class="login-btn" @click="goToLogin">
+        <i class="bi bi-person"></i>
         <span>GirişYap</span>
+      </button>
+      <button v-if="isLoggedIn" class="account-btn" @click="goToAccount">
+        <i class="bi bi-person"></i>
+        <span>Hesabım</span>
       </button>
       <button class="cart-btn" @click="goToSepetim">
         <i class="bi bi-cart"></i> <!-- Bootstrap Shopping Cart İkonu -->
@@ -125,7 +138,8 @@
     <Outlet />
   </div>
 
-  <div v-if="isKampanyalarVisible" class="popup-container" @mouseenter="enterKampanyalar" @mouseleave="leaveKampanyalar">
+  <div v-if="isKampanyalarVisible" class="popup-container" @mouseenter="enterKampanyalar"
+    @mouseleave="leaveKampanyalar">
     <Kampanyalar />
   </div>
 
@@ -147,10 +161,12 @@ import Kadin from '~/components/Kadin.vue';
 import SearchModal from '~/components/SearchModal.vue';
 import { useRouter } from 'vue-router'; // Vue Router'ı import et
 import { useProducts } from '@/stores/productsStore';
+import { useAuthStore } from '@/stores/auth';
 import Cart1 from '~/components/Cart1.vue';
 import Cart2 from '~/components/Cart2.vue';
+import Favoriler from '~/pages/Favoriler.vue';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
- 
+
 const db = getFirestore();
 
 const { searchQuery, products, searchProducts } = useProducts(); // Pinia Store'dan al
@@ -159,7 +175,7 @@ const showSearchModal = ref(false);
 
 const filteredProducts = ref([]);
 
-
+const authStore = useAuthStore();
 
 // Arama işlemi her yazıldıkça çalışacak
 const handleSearch = async () => {
@@ -178,7 +194,7 @@ onMounted(async () => {
 // Firebase'den ürünleri çekme ve filtreleme
 const fetchProducts = async () => {
   try {
-    const q = searchQuery.value.trim() 
+    const q = searchQuery.value.trim()
       ? query(collection(db, 'products'), where("name", "==", searchQuery.value)) // Arama sorgusuna göre filtrele
       : collection(db, 'products'); // Arama yoksa tüm ürünleri getir
 
@@ -198,6 +214,18 @@ const toggleSearchModal = () => {
 
 
 const router = useRouter(); // useRouter hook'unu kullan
+
+const isLoggedIn = computed(() => authStore.isLoggedIn);
+
+const goToFavoriler = () => {
+  router.push('/Favoriler');
+};
+const goToBildirimler = () => {
+  router.push('/Bildirimler');
+};
+const goToAccount = () => {
+  router.push('/Hesabim');
+};
 
 const goToLogin = () => {
   router.push('/Giris'); // Login sayfasına yönlendir
@@ -496,7 +524,7 @@ router.beforeEach((to) => {
 .actions {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 2px;
 }
 
 .actions button {
@@ -508,30 +536,30 @@ router.beforeEach((to) => {
   /* İkon ve yazıyı ortalar */
   justify-content: center;
   /* Dikey ortalama */
-  gap: 5px;
+  gap: 2px;
   /* İkon ve yazı arasındaki boşluk */
   background-color: white;
   /* Arka plan rengi */
   color: black;
   /* Varsayılan yazı ve ikon rengi */
-  padding: 10px 15px;
+  padding: 2px 7px;
   /* İç boşluklar */
   cursor: pointer;
   /* Tıklanabilir olduğunu gösterir */
   transition: all 0.3s ease;
   /* Hover geçişi için animasyon */
   border: none;
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
 }
 
 .actions button i {
-  font-size: 19px;
+  font-size: 16px;
   /* İkon boyutu */
 }
 
 .actions button span {
-  font-size: 12px;
+  font-size: 11px;
   /* Yazı boyutu */
 }
 
