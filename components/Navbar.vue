@@ -17,10 +17,17 @@
         <router-link to="/KadinJean"> Kadın</router-link>
       </li>
 
-      <li><a href="#">Erkek</a></li>
-      <li><a href="#">Çocuk</a></li>
-      <li><a href="#">Outlet</a></li>
-      <li><a href="#">Kampanyalar</a></li>
+      <li @mouseenter="showErkek" @mouseleave="hideErkek">
+        <a href="#">Erkek</a></li>
+
+      <li @mouseenter="showCocuk" @mouseleave="hideCocuk">
+        <a href="#">Çocuk</a></li>
+
+      <li @mouseenter="showOutlet" @mouseleave="hideOutlet">
+        <a href="#">Outlet</a></li>
+
+      <li @mouseenter="showKampanyalar" @mouseleave="hideKampanyalar">
+        <a href="#">Kampanyalar</a></li>
     </ul>
 
     <!-- Jean içeriği -->
@@ -31,6 +38,22 @@
     <!-- Kadın içeriği -->
     <div :class="{ 'popup-container': true, active: isKadinVisible }" @mouseenter="enterKadin" @mouseleave="leaveKadin">
       <Kadin />
+    </div>
+
+    <div :class="{ 'popup-container': true, active: isErkekVisible }" @mouseenter="enterErkek" @mouseleave="leaveErkek">
+      <Erkek />
+    </div>
+
+    <div :class="{ 'popup-container': true, active: isCocukVisible }" @mouseenter="enterCocuk" @mouseleave="leaveCocuk">
+      <Cocuk />
+    </div>
+
+    <div :class="{ 'popup-container': true, active: isOutletVisible }" @mouseenter="enterOutlet" @mouseleave="leaveOutlet">
+      <Outlet />
+    </div>
+
+    <div :class="{ 'popup-container': true, active: isKampanyalarVisible }" @mouseenter="enterKampanyalar" @mouseleave="leaveKampanyalar">
+      <Kampanyalar />
     </div>
 
 
@@ -88,6 +111,22 @@
 
   <div v-if="isKadinVisible" class="popup-container" @mouseenter="enterKadin" @mouseleave="leaveKadin">
     <Kadin />
+  </div>
+
+  <div v-if="isErkekVisible" class="popup-container" @mouseenter="enterErkek" @mouseleave="leaveErkek">
+    <Erkek />
+  </div>
+
+  <div v-if="isCocukVisible" class="popup-container" @mouseenter="enterCocuk" @mouseleave="leaveCocuk">
+    <Cocuk />
+  </div>
+
+  <div v-if="isOutletVisible" class="popup-container" @mouseenter="enterOutlet" @mouseleave="leaveOutlet">
+    <Outlet />
+  </div>
+
+  <div v-if="isKampanyalarVisible" class="popup-container" @mouseenter="enterKampanyalar" @mouseleave="leaveKampanyalar">
+    <Kampanyalar />
   </div>
 
 
@@ -178,6 +217,18 @@ const isMouseInsideJean = ref(false); // Fare Jean menüsü veya içeriği üzer
 const isKadinVisible = ref(false);
 const isMouseInsideKadin = ref(false);
 
+const isErkekVisible = ref(false);
+const isMouseInsideErkek = ref(false);
+
+const isCocukVisible = ref(false);
+const isMouseInsideCocuk = ref(false);
+
+const isOutletVisible = ref(false);
+const isMouseInsideOutlet = ref(false);
+
+const isKampanyalarVisible = ref(false);
+const isMouseInsideKampanyalar = ref(false);
+
 // Kategoriler listesi
 const categories = [
   { title: 'KADIN', subtitle: 'JEANS' },
@@ -217,6 +268,54 @@ const enterKadin = () => (isMouseInsideKadin.value = true); // Fare içeride
 const leaveKadin = () => {
   isMouseInsideKadin.value = false; // Fare çıktı
   hideKadin();
+};
+
+const showErkek = () => (isErkekVisible.value = true);
+const hideErkek = () => {
+  if (!isMouseInsideErkek.value) {
+    isErkekVisible.value = false;
+  }
+};
+const enterErkek = () => (isMouseInsideErkek.value = true); // Fare içeride
+const leaveErkek = () => {
+  isMouseInsideErkek.value = false; // Fare çıktı
+  hideErkek();
+};
+
+const showCocuk = () => (isCocukVisible.value = true);
+const hideCocuk = () => {
+  if (!isMouseInsideCocuk.value) {
+    isCocukVisible.value = false;
+  }
+};
+const enterCocuk = () => (isMouseInsideCocuk.value = true); // Fare içeride
+const leaveCocuk = () => {
+  isMouseInsideCocuk.value = false; // Fare çıktı
+  hideCocuk();
+};
+
+const showOutlet = () => (isOutletVisible.value = true);
+const hideOutlet = () => {
+  if (!isMouseInsideOutlet.value) {
+    isOutletVisible.value = false;
+  }
+};
+const enterOutlet = () => (isMouseInsideOutlet.value = true); // Fare içeride
+const leaveOutlet = () => {
+  isMouseInsideOutlet.value = false; // Fare çıktı
+  hideOutlet();
+};
+
+const showKampanyalar = () => (isKampanyalarVisible.value = true);
+const hideKampanyalar = () => {
+  if (!isMouseInsideKampanyalar.value) {
+    isKampanyalarVisible.value = false;
+  }
+};
+const enterKampanyalar = () => (isMouseInsideKampanyalar.value = true); // Fare içeride
+const leaveKampanyalar = () => {
+  isMouseInsideKampanyalar.value = false; // Fare çıktı
+  hideKampanyalar();
 };
 
 // Mesajlar listesi
