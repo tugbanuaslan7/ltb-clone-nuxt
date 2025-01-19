@@ -108,7 +108,7 @@ const addProductToCart = () => {
 }
 
 .cart1 {
-    width: 410px;
+    width: 380px;
     height: auto;
     overflow: visible;
     position: relative;

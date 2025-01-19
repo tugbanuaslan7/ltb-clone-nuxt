@@ -10,6 +10,7 @@
     <!-- Ana sayfada tüm bileşenler görüntülenecek -->
     <ProductCarousel v-if="isIndexPage" />
     <Visual v-if="isIndexPage" />
+    <Kargo v-if="isIndexPage" />
     <Banner v-if="isIndexPage" />
     <Footer v-if="isIndexPage" />
   </div>
@@ -23,6 +24,7 @@ import Footer from '~/components/Footer.vue';
 import Banner from '~/components/Banner.vue';
 import ProductCarousel from '~/components/ProductCarousel.vue';
 import Visual from '~/components/Visual.vue';
+import Kargo from '~/components/Kargo.vue';
 import KadinJean from '~/pages/KadinJean.vue';
 
 // Aktif rotayı almak için `useRoute` kullanıyoruz

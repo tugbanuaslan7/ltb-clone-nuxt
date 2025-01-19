@@ -1,7 +1,7 @@
 <template>
     <div class="cart-frame">
-        <div class="cart2-wrapper">
-            <div class="cart2" @mouseover="startImageRotation" @mouseleave="stopImageRotation"
+        <div class="cart3-wrapper">
+            <div class="cart3" @mouseover="startImageRotation" @mouseleave="stopImageRotation"
                 @mousemove="handleMouseMove">
                 <img :src="currentImage" alt="Product Image" class="product-image" />
                 <div class="icons">
@@ -40,20 +40,20 @@ const cartStore = useCartStore();
 
 // Sabit Ürün Verisi
 const product = ref({
-    id: 2, // Ürüne benzersiz bir ID ekledim
-    name: 'Wanda Yüksek Bel Düz Paça Straight Jean Pantolon',
+    id: 3, // Ürüne benzersiz bir ID ekledim
+    name: 'Vanetta Relaxed Straight Yüksek Bel Rahat Kesim Düz Paça Jean Pantolon',
     discount: 25,
     currentPrice: 712.49,
     originalPrice: 949.99,
     images: [
-        '/assets/images/wanda-1.jpg',
-        '/assets/images/wanda-2.jpg',
-        '/assets/images/wanda-3.jpg',
-        '/assets/images/wanda-4.jpg',
-        '/assets/images/wanda-5.jpg',
+        '/assets/images/vanetta-1.jpg',
+        '/assets/images/vanetta-2.jpg',
+        '/assets/images/vanetta-3.jpg',
+        '/assets/images/vanetta-4.jpg',
+        '/assets/images/vanetta-5.jpg',
     ],
     colors: [
-        'rgb(55, 58, 87)', 'rgb(81, 87, 131)', '#10104c'
+        'rgb(55, 58, 87)', 'rgb(81, 87, 131)',
     ]
 });
 
@@ -108,35 +108,30 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.cart2-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* Fotoğrafı ve göstergeleri ortalamak için */
+.cart3-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.cart2 {
-    width: 380px;
-    height: auto;
-    overflow: visible;
-    /* İçeriğin dışarı taşmasına izin ver */
-    position: relative;
-    cursor: pointer;
-    margin-top: 20px;
-    margin-right: 20px;
+.cart3 {
+  width: 380px; /* Flexbox içerisinde esnek genişlik */
+  height: auto;
+  overflow: visible;
+  position: relative;
+  cursor: pointer;
+  margin-top: 20px;
 }
 
 .cart-frame {
-    display: flex;
-    /* Flexbox kullanarak ortalama */
-    justify-content: center;
-    /* Yatayda ortala */
-    align-items: center;
-    /* Dikeyde ortala */
-    padding: 10px;
-    border: 2px solid transparent;
-    background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border: 2px solid transparent;
+  background-color: transparent;
 }
+
 
 .product-image {
     width: 100%;
@@ -148,7 +143,7 @@ onUnmounted(() => {
 
 .icons {
     position: absolute;
-    bottom: 100px;
+    bottom: 125px;
     /* Sağ alt köşeye yerleştirme */
     right: 10px;
     display: flex;
