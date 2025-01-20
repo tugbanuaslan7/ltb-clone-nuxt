@@ -1,6 +1,7 @@
 <template>
     <div class="kadin-jean">
         <div class="container">
+          
             <div class="row">
                 <div class="categories">
 
@@ -39,6 +40,10 @@ import Cart3 from '~/components/Cart3.vue';
 .row {
   display: flex;
   justify-content: flex-end;
+}
+
+.categories {
+
 }
 
 .first-cart, .second-cart, .third-cart {
